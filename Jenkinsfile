@@ -7,7 +7,7 @@ pipeline {
     }
 
     stages{
-        stage('Build') {
+         stage('Build') {
             steps{
                 git credentialsId: 'github', url: 'https://github.com/kprasanth999/Maven-Java-Project.git'    
 	        	sh "mvn clean package"  
@@ -17,7 +17,7 @@ pipeline {
                 junit 'target/surefire-reports/*.xml'
                 archiveArtifacts artifacts: '**/*.war', followSymlinks: false
                 }
-            }   
+           }   
 		   
     }        
 }
