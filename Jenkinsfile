@@ -12,7 +12,7 @@ pipeline {
                 git credentialsId: 'github', url: 'https://github.com/kprasanth999/Maven-Java-Project.git'    
 	        	sh "mvn clean package"  
 			}
-            post{
+             post{
                 success{
                 junit 'target/surefire-reports/*.xml'
                 archiveArtifacts artifacts: '**/*.war', followSymlinks: false
