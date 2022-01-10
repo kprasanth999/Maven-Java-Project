@@ -15,7 +15,7 @@ pipeline {
     stages{
         stage('Build') {
             steps{
-                git credentialsId: 'github', url: 'https://github.com/kprasanth999/Maven-Java-Project.git'    
+                git credentialsId: 'git', url: 'https://github.com/kprasanth999/Maven-Java-Project.git'    
 	        	sh "mvn clean package"  
 	    }
             post{
