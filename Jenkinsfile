@@ -1,3 +1,9 @@
+def ansible = [:]
+         ansible.name = 'ansible'
+         ansible.host = '172.31.14.182'
+         ansible.user = 'centos'
+         ansible.password = 'Rnstech@123'
+         ansible.allowAnyHosts = true
 pipeline {
     agent { label 'BuildServer'}
 
@@ -7,17 +13,27 @@ pipeline {
     }
 
     stages{
-         stage('Build') {
+        stage('Build') {
             steps{
                 git credentialsId: 'github', url: 'https://github.com/kprasanth999/Maven-Java-Project.git'    
 	        	sh "mvn clean package"  
-			}
-             post{
+	    }
+            post{
                 success{
                 junit 'target/surefire-reports/*.xml'
                 archiveArtifacts artifacts: '**/*.war', followSymlinks: false
                 }
-           }   
-	 }	   
+            }   
+	}
+    }   
+    stages{
+        stage('Tools Setup'){
+            steps{
+                echo "Tools Setup"
+                sshCommand remote: ansible, command: 'cd Maven-Java-Project; git pull'
+                sshCommand remote: ansible, command: 'cd Maven-Java-Project; ansible-playbook -i hosts tools/sonarqube/sonar-install.yaml'
+                sshCommand remote: ansible, command: 'cd Maven-Java-Project; ansible-playbook -i hosts tools/docker/docker-install.yml'   
+            }   			
+        } 
     }        
 }
