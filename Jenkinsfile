@@ -25,8 +25,6 @@ pipeline {
                 }
             }   
 	}
-    }   
-    stages{
         stage('Tools Setup'){
             steps{
                 echo "Tools Setup"
