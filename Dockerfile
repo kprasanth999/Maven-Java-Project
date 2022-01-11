@@ -14,7 +14,7 @@ RUN unzip apache-tomcat-8.5.73-windows-x64.zip
 RUN mv /opt/apache-tomcat-8.5.73/ /opt/tomcat
 
 WORKDIR /opt/tomcat/webapps
-COPY target/*.war /opt/tomcat/webapps/webapp.war
+COPY /home/centos/jenkins/workspace/pipe/target/*.war /opt/tomcat/webapps/webapp.war
 
 EXPOSE 8080
 
