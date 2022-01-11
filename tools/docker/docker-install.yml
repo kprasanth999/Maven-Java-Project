@@ -47,6 +47,16 @@
         name: docker-ce
         state: latest
       become: yes
+    - name: Install Docker
+      package:
+        name: docker-ce-cli
+        state: latest
+      become: yes
+    - name: Install Docker
+      package:
+        name: containerd.io
+        state: latest
+      become: yes
 
     - name: Start Docker service
       service:
