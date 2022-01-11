@@ -13,9 +13,12 @@ RUN curl -O https://dlcdn.apache.org/tomcat/tomcat-8/v8.5.73/bin/apache-tomcat-8
 RUN unzip apache-tomcat-8.5.73-windows-x64.zip 
 RUN mv /opt/apache-tomcat-8.5.73/ /opt/tomcat
 
+WORKDIR /opt/tomcat/bin
+RUN chmod +x ./*
+
 WORKDIR /opt/tomcat/webapps
 COPY target/*.war /opt/tomcat/webapps/webapp.war
 
 EXPOSE 8080
 
-ENTRYPOINT ["/opt/tomcat/bin/catalina.sh", "run"]
+ENTRYPOINT ["/opt/tomcat/bin/startup.sh", "run"]
