@@ -61,8 +61,8 @@ pipeline {
        }   			
        stage('Build Docker Image') {
             steps{
-                   sh "sudo echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf"
-		   sh "sudo systemctl restart network"  
+                   // sh "sudo echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf"
+		   // sh "sudo systemctl restart network"  
 		   sh "docker build -t prasanthdocknet/webapp1 ."  
             }
        }
@@ -80,7 +80,7 @@ pipeline {
 	             //Deploy to K8s Cluster 
                 echo "Deploy to Staging Server"
 	            sshCommand remote: kops, command: "cd Maven-Java-Project; git pull"
-	            // sshCommand remote: kops, command: "kubectl delete -f Maven-Java-Project/k8s-code/staging/app/deploy-webapp.yml"
+	            sshCommand remote: kops, command: "kubectl delete -f Maven-Java-Project/k8s-code/staging/app/."
 	            sshCommand remote: kops, command: "kubectl apply -f Maven-Java-Project/k8s-code/staging/app/."
 	    }		    
        }
