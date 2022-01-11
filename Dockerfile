@@ -5,7 +5,7 @@ LABEL Maintainer=RNS Email=rns@rnstech.com
 RUN yum update -y
 RUN yum -y install java
 RUN java -version
-
+RUN yum install -y unzip
 #RUN mkdir /opt/tomcat/
 
 WORKDIR /opt
