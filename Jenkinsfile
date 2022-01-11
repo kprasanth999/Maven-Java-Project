@@ -24,16 +24,9 @@ pipeline {
             steps{
                 git credentialsId: 'github', url: 'https://github.com/kprasanth999/Maven-Java-Project.git'    
 	        stash 'Source'
-		    sh "mvn clean package"  
 	    }
-            post{
-                success{
-                junit 'target/surefire-reports/*.xml'
-                archiveArtifacts artifacts: '**/*.war', followSymlinks: false
-                }
-            }   
-        }   
-        stage('SonarQube analysis') {
+	}	
+	stage('SonarQube analysis') {
             steps{
                 echo "Sonar Scanner"
                    sh "mvn clean compile"
@@ -42,7 +35,19 @@ pipeline {
                 }                     
             }
         }
-        stage('Tools Setup'){
+	stage('Package&Test'){
+	    steps{
+		sh "mvn clean package"  
+	    }
+            post{
+                success{
+                   junit 'target/surefire-reports/*.xml'
+                   archiveArtifacts artifacts: '**/*.war', followSymlinks: false
+                }
+            }   
+        }   
+        
+	stage('Tools Setup'){
             steps{
                 echo "Tools Setup"
                    sshCommand remote: ansible, command: 'cd Maven-Java-Project; git pull'
