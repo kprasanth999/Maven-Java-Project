@@ -45,5 +45,19 @@ pipeline {
 	        sshCommand remote: kops, command: "kubectl apply -f Maven-Java-Project/k8s-code/prod/namespace/prod-ns.yml"
             }  
        }   			
+       stage('Build Docker Image') {
+            steps{
+                  sh "docker build -t prasanthdocknet/webapp1 ."  
+            }
+       }
+	    
+       stage('Publish Docker Image') {
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'dockerPassword', usernameVariable: 'dockerUser')]) {
+    		    sh "docker login -u ${dockerUser} -p ${dockerPassword}"
+	        }
+        	sh "docker push prasanthdocknet/webapp1"
+            }
+       }
     } 
 }
