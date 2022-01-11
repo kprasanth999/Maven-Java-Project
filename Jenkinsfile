@@ -47,7 +47,7 @@ pipeline {
        }   			
        stage('Build Docker Image') {
             steps{
-                  sh "echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf"
+                  sh "sudo echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf"
 		  sh "systemctl restart network"  
 		  sh "docker build -t prasanthdocknet/webapp1 ."  
             }
