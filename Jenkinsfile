@@ -23,7 +23,8 @@ pipeline {
         stage('Build') {
             steps{
                 git credentialsId: 'github', url: 'https://github.com/kprasanth999/Maven-Java-Project.git'    
-	        	sh "mvn clean package"  
+	        stash 'Source'
+		    sh "mvn clean package"  
 	    }
             post{
                 success{
