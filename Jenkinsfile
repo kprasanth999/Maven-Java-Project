@@ -7,7 +7,7 @@ def ansible = [:]
 		 
 def kops = [:]
         kops.name = 'kops'
-        kops.host = '54.255.180.216'
+        kops.host = '13.229.85.111'
         kops.user = 'centos'
         kops.password = 'Rnstech@123'
         kops.allowAnyHosts = true
